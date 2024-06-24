@@ -1,11 +1,17 @@
 import { nanoid } from "nanoid";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import "./App.css";
 import MultiChoice from "./components/MultiChoice";
 
 function App() {
   const [isNewGame, setIsNewGame] = useState(true);
   const [isSelected, setIsSelected] = useState(true);
+
+  const newGameSound = useRef(new Audio("/new_game_sound.wav"));
+  const playNewGameSound = () => {
+    newGameSound.current.volume = 0.5;
+    newGameSound.current.play();
+  };
 
   const questionArray = [
     {
@@ -37,6 +43,7 @@ function App() {
 
   const startGame = () => {
     setIsNewGame(false);
+    playNewGameSound();
   };
 
   const selectAnswer = () => {

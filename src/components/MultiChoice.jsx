@@ -1,5 +1,6 @@
 import { nanoid } from "nanoid";
 import React from "react";
+import ButtonWithSound from "./ButtonWithSound";
 
 const MultiChoice = ({ questionArray, handleOptionClick }) => {
   return (
@@ -12,13 +13,13 @@ const MultiChoice = ({ questionArray, handleOptionClick }) => {
           </h1>
 
           {obj.options.map((option, index) => (
-            <button
+            <ButtonWithSound
               className="button-choice space"
               key={`${obj.id}-${index}`}
               onClick={() => handleOptionClick(`${obj.id}-${index}`, option)}
             >
               {option}
-            </button>
+            </ButtonWithSound>
           ))}
           <br />
           <br />
