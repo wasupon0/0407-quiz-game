@@ -1,0 +1,77 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #deebf8;
+  font-family: Karla, Inter;
+  margin: 0;
+  padding: 2rem;
+}
+
+main {
+  border: 5px solid #4d5b9e21;
+  border-radius: 20px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 1rem;
+}
+
+.position-up {
+  margin-top: -1rem;
+}
+
+.space {
+  margin-left: 20px;
+}
+
+hr {
+  border: 1px solid #dbdef0;
+  margin: 1rem 0;
+}
+
+button:hover {
+  outline: 1px solid #4d5b9e;
+}
+
+button:active {
+  box-shadow: inset 0px 1px 2px rgba(0, 0, 0, 0.25); /* Updated line */
+  outline: none;
+}
+
+.title-choice {
+  color: #293264;
+  font-size: 2rem;
+  margin-bottom: -1rem;
+}
+
+.header-choice {
+  color: #293264;
+  font-size: 1.5rem;
+}
+
+.button-choice {
+  background-color: #d6dbf5;
+  border: none;
+  border-radius: 20px;
+  color: #293264;
+  cursor: pointer;
+  font-size: 1rem;
+  margin-top: 1rem;
+  padding: 0.5rem 1rem;
+}
+
+main.new-game > h1 {
+  color: #293264;
+}
+
+main.new-game > button {
+  background-color: #4d5b9e;
+  border: none;
+  border-radius: 5px;
+  color: #fff;
+  cursor: pointer;
+  font-size: 1rem;
+  margin-top: 1rem;
+  padding: 0.5rem 1rem;
+}
