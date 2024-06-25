@@ -6,6 +6,7 @@ const MultiChoice = ({
   questionArray,
   handleChoiceClick,
   resetAnswer,
+  showCorrectAnswer,
   isMuted,
 }) => {
   return (
@@ -35,6 +36,8 @@ const MultiChoice = ({
               handleClick={() => handleChoiceClick(obj.id, choice.text)}
               isDisable={choice.isDisable}
               isSelected={choice.isSelected}
+              isCorrect={choice.isCorrect}
+              showCorrectAnswer={showCorrectAnswer}
               isMuted={isMuted}
             >
               {choice.text}

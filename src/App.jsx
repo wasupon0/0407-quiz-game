@@ -1,6 +1,7 @@
 import { decode } from "html-entities";
 import { nanoid } from "nanoid";
 import { useEffect, useRef, useState } from "react";
+import ClipLoader from "react-spinners/ClipLoader";
 import "./App.css";
 import sampleArray from "./assets/sampleArray";
 import MultiChoice from "./components/MultiChoice";
@@ -15,6 +16,10 @@ function App() {
   const [isEndGame, setIsEndGame] = useState(false);
   const [isReady, setIsReady] = useState(false);
   const [isMuted, setIsMuted] = useState(false);
+  const [showCorrectAnswer, setShowCorrectAnswer] = useState(false);
+
+  let [loading, setLoading] = useState(true);
+  let [color, setColor] = useState("red");
 
   const url =
     "https://opentdb.com/api.php?amount=5&category=9&difficulty=easy&type=multiple";
@@ -53,7 +58,7 @@ function App() {
     if (!isReady && isNewGame) {
       timeoutId = setTimeout(() => {
         location.reload();
-      }, 5000);
+      }, 1000);
     }
 
     return () => {
@@ -88,7 +93,12 @@ function App() {
 
       // map to each choice in the choices array and create new object with isSelected key
       newObj.choices = newObj.choices.map((choice) => {
-        return { text: choice, isSelected: false, isDisable: false };
+        return {
+          text: choice,
+          isSelected: false,
+          isDisable: false,
+          isCorrect: false,
+        };
       });
 
       // console.log(newObj);
@@ -150,10 +160,6 @@ function App() {
     for (let i = 0; i < choiceArray.length; i++) {
       if (choiceArray[i].text === choiceText) {
         choiceArray[i].isSelected = !choiceArray[i].isSelected;
-
-        // if (choiceText === answer) {
-        //   setScore((prevScore) => prevScore + 1);
-        // }
       }
 
       choiceArray[i].isDisable = true;
@@ -197,6 +203,23 @@ function App() {
     console.log("score: ", score);
   }, [questionArray]);
 
+  useEffect(() => {
+    if (showCorrectAnswer) {
+      setQuestionArray((prevQuestionArray) => {
+        return prevQuestionArray.map((prevObj) => {
+          return {
+            ...prevObj,
+            choices: prevObj.choices.map((choice) => {
+              return choice.text === prevObj.answer
+                ? { ...choice, isCorrect: true }
+                : choice;
+            }),
+          };
+        });
+      });
+    }
+  }, [showCorrectAnswer]);
+
   const startGame = () => {
     playNewGameSound();
     setScore(0);
@@ -206,6 +229,7 @@ function App() {
   const endGame = () => {
     playNewGameSound();
     setIsEndGame(true);
+    setShowCorrectAnswer((prev) => !prev);
   };
 
   const restartGame = () => {
@@ -214,6 +238,7 @@ function App() {
     setIsEndGame(false);
     setIsNewGame(true);
     setIsReady(false);
+    setShowCorrectAnswer(false);
   };
 
   return isNewGame ? (
@@ -242,12 +267,15 @@ function App() {
       ) : (
         <>
           <p className="error-fetch">
-            Can not fetch question, please refresh the page until start button
-            shows up
+            Can not fetch question, please wait until start button shows up
           </p>
-          <button className="button-refresh" onClick={() => location.reload()}>
-            Refresh
-          </button>
+          <ClipLoader
+            color={color}
+            loading={loading}
+            size={50}
+            aria-label="Loading Spinner"
+            data-testid="loader"
+          />
         </>
       )}
     </main>
@@ -270,6 +298,7 @@ function App() {
         questionArray={questionArray}
         handleChoiceClick={handleChoiceClick}
         resetAnswer={resetAnswer}
+        showCorrectAnswer={showCorrectAnswer}
         isMuted={isMuted}
       />
       <button className="button-calculate" onClick={endGame}>
@@ -279,7 +308,7 @@ function App() {
       <button className="button-restart" onClick={restartGame}>
         Restart Quiz
       </button>
-      {isEndGame ? <p>Total Score: {`${score}/${totalScore}`}</p> : <></>}
+      {isEndGame ? <h1>Total Score: {`${score}/${totalScore}`}</h1> : <></>}
     </main>
   );
 }

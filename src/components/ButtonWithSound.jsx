@@ -6,7 +6,10 @@ const ButtonWithSound = ({
   handleClick,
   children,
   className,
+  showCorrectAnswer,
+  isCorrect,
   isMuted,
+
   ...props
 }) => {
   const hoverSound = useRef(new Audio("/hover_sound.wav"));
@@ -29,24 +32,47 @@ const ButtonWithSound = ({
 
   return (
     <>
-      <button
-        className={
-          isSelected
-            ? "button-selected"
-            : isDisable
-            ? "button-disabled"
-            : className
-        }
-        disabled={isDisable}
-        onMouseEnter={playHoverSound}
-        onClick={() => {
-          playClickSound();
-          handleClick();
-        }}
-        {...props}
-      >
-        {children}
-      </button>
+      {showCorrectAnswer ? (
+        <button
+          className={
+            isCorrect
+              ? "button-answer"
+              : isSelected
+              ? "button-wrong"
+              : isDisable
+              ? "button-disabled-end"
+              : className
+          }
+          disabled={isDisable}
+          onMouseEnter={playHoverSound}
+          onClick={() => {
+            playClickSound();
+            handleClick();
+          }}
+          {...props}
+        >
+          {children}
+        </button>
+      ) : (
+        <button
+          className={
+            isSelected
+              ? "button-selected"
+              : isDisable
+              ? "button-disabled"
+              : className
+          }
+          disabled={isDisable}
+          onMouseEnter={playHoverSound}
+          onClick={() => {
+            playClickSound();
+            handleClick();
+          }}
+          {...props}
+        >
+          {children}
+        </button>
+      )}
       &nbsp; &nbsp; &nbsp;
     </>
   );
