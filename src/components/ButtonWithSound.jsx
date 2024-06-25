@@ -1,6 +1,13 @@
 import React, { useRef } from "react";
 
-const ButtonWithSound = ({ onClick, children, className, ...props }) => {
+const ButtonWithSound = ({
+  isSelected,
+  isDisable,
+  handleClick,
+  children,
+  className,
+  ...props
+}) => {
   const hoverSound = useRef(new Audio("/hover_sound.wav"));
   const selectSound = useRef(new Audio("/select_sound.wav"));
 
@@ -16,9 +23,19 @@ const ButtonWithSound = ({ onClick, children, className, ...props }) => {
 
   return (
     <button
+      className={
+        isSelected
+          ? "button-selected"
+          : isDisable
+          ? "button-disabled"
+          : className
+      }
+      disabled={isDisable}
       onMouseEnter={playHoverSound}
-      onClick={playClickSound}
-      className={className}
+      onClick={() => {
+        playClickSound();
+        handleClick();
+      }}
       {...props}
     >
       {children}

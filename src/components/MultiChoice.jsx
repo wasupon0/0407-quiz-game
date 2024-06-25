@@ -2,25 +2,47 @@ import { nanoid } from "nanoid";
 import React from "react";
 import ButtonWithSound from "./ButtonWithSound";
 
-const MultiChoice = ({ questionArray, handleOptionClick }) => {
+const MultiChoice = ({ questionArray, handleChoiceClick, resetAnswer }) => {
   return (
     <div className="position-up">
       {questionArray.map((obj) => (
         <div key={nanoid()}>
           <br />
           <h1 className="header-choice" key={obj.id}>
-            {obj.question}
+            {obj.quiz}{" "}
           </h1>
 
-          {obj.options.map((option, index) => (
-            <ButtonWithSound
-              className="button-choice space"
-              key={`${obj.id}-${index}`}
-              onClick={() => handleOptionClick(`${obj.id}-${index}`, option)}
-            >
-              {option}
-            </ButtonWithSound>
+          {obj.choices.map((choice, index) => (
+            <span key={nanoid()}>
+              <ButtonWithSound
+                className="button-choice "
+                key={`${obj.id}-${choice.text}`}
+                handleClick={() => handleChoiceClick(obj.id, choice.text)}
+                isDisable={choice.isDisable}
+                isSelected={choice.isSelected}
+              >
+                {choice.text}
+              </ButtonWithSound>
+
+              <>
+                {
+                  <button
+                    className={
+                      choice.isDisable
+                        ? "button-reset"
+                        : "button-reset-disabled"
+                    }
+                    onClick={() => resetAnswer(obj, choice.text)}
+                    disabled={choice.isDisable ? false : true}
+                  >
+                    ↻
+                  </button>
+                }
+                &nbsp;&nbsp;
+              </>
+            </span>
           ))}
+
           <br />
           <br />
           <hr />
