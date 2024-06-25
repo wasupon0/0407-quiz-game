@@ -16,7 +16,7 @@ const MultiChoice = ({
           <br />
           <h1 className="header-choice" key={obj.id}>
             {obj.quiz}{" "}
-            <button
+            {/* <button
               className={
                 obj.choices[0].isDisable
                   ? "button-reset"
@@ -26,7 +26,7 @@ const MultiChoice = ({
               onClick={() => resetAnswer(obj)}
             >
               ↻
-            </button>
+            </button> */}
           </h1>
 
           {obj.choices.map((choice, index) => (

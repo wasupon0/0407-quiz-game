@@ -157,12 +157,18 @@ function App() {
   const checkSelectedChoice = (choiceArray, choiceText, answer) => {
     let newChoiceArray = [];
     // console.log(choiceArray);
+
     for (let i = 0; i < choiceArray.length; i++) {
+      // logic to select only 1 choice
       if (choiceArray[i].text === choiceText) {
+        // select and unselect the choice
         choiceArray[i].isSelected = !choiceArray[i].isSelected;
+      } else {
+        // the other choices will be unselected
+        choiceArray[i].isSelected = false;
       }
 
-      choiceArray[i].isDisable = true;
+      //choiceArray[i].isDisable = true;
       newChoiceArray.push(choiceArray[i]);
     }
     return newChoiceArray;
