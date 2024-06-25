@@ -29,15 +29,25 @@ function App() {
       setTotalScore(data.results.length);
       setIsReady(true);
     } catch (error) {
-      // console.error(error);
+      console.error(error);
     }
   };
 
   useEffect(() => {
-    if (isNewGame) {
-      fetchData(url);
+    let timeoutId;
+
+    fetchData(url);
+
+    if (!isReady && isNewGame) {
+      timeoutId = setTimeout(() => {
+        location.reload();
+      }, 5000);
     }
-  }, [isNewGame]);
+
+    return () => {
+      clearTimeout(timeoutId);
+    };
+  }, [isReady, isNewGame]);
 
   const shuffleArray = (originalArray) => {
     const newArray = [];
@@ -107,18 +117,15 @@ function App() {
     });
   };
 
-  const resetAnswer = (obj, choiceText) => {
+  const resetAnswer = (obj) => {
     playSelectSound();
-    // console.log(choiceText);
-    // console.log(obj.id);
-
     setQuestionArray((prevQuestionArray) => {
       // loop through each object in the prevQuestionArray
       return prevQuestionArray.map((prevObj) => {
         return prevObj.id === obj.id
           ? {
               ...prevObj,
-              choices: resetSelectedChoice(prevObj, choiceText),
+              choices: resetSelectedChoice(prevObj),
             }
           : prevObj;
       });
@@ -143,25 +150,16 @@ function App() {
     return newChoiceArray;
   };
 
-  const resetSelectedChoice = (prevObj, choiceText) => {
+  const resetSelectedChoice = (prevObj) => {
     let newChoiceArray = [];
 
     if (prevObj.choices[0].isDisable == true) {
       setScore(0);
-      // console.log(score);
     }
 
     let choiceArray = prevObj.choices;
 
     for (let i = 0; i < choiceArray.length; i++) {
-      if (choiceArray[i].text === choiceText) {
-        choiceArray[i].isSelected = !choiceArray[i].isSelected;
-
-        // if (choiceArray[i].isSelected && choiceText === prevObj.answer) {
-        //   setScore((prevScore) => prevScore + 1);
-        // }
-      }
-
       choiceArray[i].isSelected = false;
       choiceArray[i].isDisable = false;
       newChoiceArray.push(choiceArray[i]);

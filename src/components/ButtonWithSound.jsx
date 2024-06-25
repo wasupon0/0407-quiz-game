@@ -22,24 +22,27 @@ const ButtonWithSound = ({
   };
 
   return (
-    <button
-      className={
-        isSelected
-          ? "button-selected"
-          : isDisable
-          ? "button-disabled"
-          : className
-      }
-      disabled={isDisable}
-      onMouseEnter={playHoverSound}
-      onClick={() => {
-        playClickSound();
-        handleClick();
-      }}
-      {...props}
-    >
-      {children}
-    </button>
+    <>
+      <button
+        className={
+          isSelected
+            ? "button-selected"
+            : isDisable
+            ? "button-disabled"
+            : className
+        }
+        disabled={isDisable}
+        onMouseEnter={playHoverSound}
+        onClick={() => {
+          playClickSound();
+          handleClick();
+        }}
+        {...props}
+      >
+        {children}
+      </button>
+      &nbsp; &nbsp; &nbsp;
+    </>
   );
 };
 

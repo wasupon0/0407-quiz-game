@@ -10,37 +10,29 @@ const MultiChoice = ({ questionArray, handleChoiceClick, resetAnswer }) => {
           <br />
           <h1 className="header-choice" key={obj.id}>
             {obj.quiz}{" "}
+            <button
+              className={
+                obj.choices[0].isDisable
+                  ? "button-reset"
+                  : "button-reset-disabled"
+              }
+              disabled={obj.choices[0].isDisable ? false : true}
+              onClick={() => resetAnswer(obj)}
+            >
+              ↻
+            </button>
           </h1>
 
           {obj.choices.map((choice, index) => (
-            <span key={nanoid()}>
-              <ButtonWithSound
-                className="button-choice "
-                key={`${obj.id}-${choice.text}`}
-                handleClick={() => handleChoiceClick(obj.id, choice.text)}
-                isDisable={choice.isDisable}
-                isSelected={choice.isSelected}
-              >
-                {choice.text}
-              </ButtonWithSound>
-
-              <>
-                {
-                  <button
-                    className={
-                      choice.isDisable
-                        ? "button-reset"
-                        : "button-reset-disabled"
-                    }
-                    onClick={() => resetAnswer(obj, choice.text)}
-                    disabled={choice.isDisable ? false : true}
-                  >
-                    ↻
-                  </button>
-                }
-                &nbsp;&nbsp;
-              </>
-            </span>
+            <ButtonWithSound
+              className="button-choice "
+              key={`${obj.id}-${choice.text}`}
+              handleClick={() => handleChoiceClick(obj.id, choice.text)}
+              isDisable={choice.isDisable}
+              isSelected={choice.isSelected}
+            >
+              {choice.text}
+            </ButtonWithSound>
           ))}
 
           <br />
