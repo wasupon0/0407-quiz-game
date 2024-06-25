@@ -248,6 +248,7 @@ function App() {
 
   return isNewGame ? (
     <main className="new-game">
+      <div className="parent-container"></div>
       <button
         onClick={toggleMute}
         style={{
@@ -286,6 +287,7 @@ function App() {
     </main>
   ) : (
     <main className="start-game">
+      <div className="parent-container"></div>
       <button
         onClick={toggleMute}
         style={{
@@ -313,7 +315,11 @@ function App() {
       <button className="button-restart" onClick={restartGame}>
         Restart Quiz
       </button>
-      {isEndGame ? <h1>Total Score: {`${score}/${totalScore}`}</h1> : <></>}
+      {isEndGame ? (
+        <h1 className="total-score">Total Score: {`${score}/${totalScore}`}</h1>
+      ) : (
+        <></>
+      )}
     </main>
   );
 }

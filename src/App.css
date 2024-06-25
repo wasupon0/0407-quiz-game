@@ -3,19 +3,44 @@
 }
 
 body {
-  background-color: #deebf8;
+  background-color: #f5f7fb;
   font-family: Karla, Inter;
   margin: 0;
   padding: 2rem;
 }
 
 main {
-  border: 5px solid #4d5b9e21;
+  background-image: url("/blobs-yellow.svg");
+  background-position-x: right;
+  background-position-y: top;
+  background-repeat: no-repeat;
+  border: 5px solid #a2acdb;
   border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  left: 0;
   margin-left: auto;
   margin-right: auto;
-  padding: 1rem;
+  padding: 20px;
   position: relative;
+  top: 0;
+  z-index: 2;
+}
+
+.parent-container {
+  background-image: url("/blobs-blue.svg");
+  background-position: left;
+  background-position-x: left;
+  background-position-y: bottom;
+  background-repeat: no-repeat;
+  content: "";
+  height: 100%;
+  left: 0;
+  pointer-events: none; /* Behind the main content */
+  position: absolute;
+  top: 0;
+  width: 100%;
+  z-index: -20;
 }
 
 .position-up {
@@ -93,6 +118,7 @@ button:focus {
 }
 
 .button-mute {
+  cursor: pointer;
   position: absolute;
   right: 0;
   top: 0;
@@ -107,6 +133,11 @@ button:focus {
 .button-disabled:hover {
   cursor: not-allowed;
   outline: 1px solid #a1a9cc;
+}
+
+button {
+  justify-content: center;
+  z-index: 2;
 }
 
 button:active {
@@ -203,6 +234,11 @@ button:hover {
 
 main.new-game > h1 {
   color: #293264;
+  text-align: center;
+}
+
+main.new-game > p {
+  text-align: center;
 }
 
 .button-refresh {
@@ -223,11 +259,14 @@ main.new-game > h1 {
   color: #fff;
   cursor: pointer;
   font-size: 1rem;
+  margin-left: auto;
+  margin-right: auto;
   margin-top: 1rem;
   padding: 0.5rem 1rem;
 }
 
 .button-restart {
+  align-self: center;
   background-color: #9e4d54;
   border: none;
   border-radius: 5px;
@@ -236,15 +275,33 @@ main.new-game > h1 {
   font-size: 1rem;
   margin-top: 1rem;
   padding: 0.5rem 1rem;
+  width: 200px;
 }
 
 .button-calculate {
+  align-self: center;
   background-color: #679e4d;
   border: none;
   border-radius: 5px;
   color: #fff;
   cursor: pointer;
+
   font-size: 1rem;
   margin-top: 1rem;
   padding: 0.5rem 1rem;
+  width: 200px;
+}
+
+.total-score {
+  color: #293264;
+  margin-bottom: 0;
+  margin-top: 2rem;
+  text-align: center;
+}
+
+.error-fetch {
+  color: #ff4655;
+  font-size: 1rem;
+  font-weight: bold;
+  margin-top: 1rem;
 }
