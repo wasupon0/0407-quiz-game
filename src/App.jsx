@@ -128,11 +128,7 @@ function App() {
         return prevObj.id === id
           ? {
               ...prevObj,
-              choices: checkSelectedChoice(
-                prevObj.choices,
-                choiceText,
-                prevObj.answer
-              ),
+              choices: checkSelectedChoice(prevObj.choices, choiceText),
             }
           : prevObj;
       });
@@ -154,7 +150,7 @@ function App() {
     });
   };
 
-  const checkSelectedChoice = (choiceArray, choiceText, answer) => {
+  const checkSelectedChoice = (choiceArray, choiceText) => {
     let newChoiceArray = [];
     // console.log(choiceArray);
 
@@ -253,8 +249,7 @@ function App() {
   };
 
   return isNewGame ? (
-    <main className="new-game">
-      <div className="parent-container"></div>
+    <main className="new-game ">
       <button
         onClick={toggleMute}
         style={{
@@ -293,7 +288,6 @@ function App() {
     </main>
   ) : (
     <main className="start-game">
-      <div className="parent-container"></div>
       <button
         onClick={toggleMute}
         style={{
