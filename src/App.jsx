@@ -198,10 +198,15 @@ function App() {
       }, 0);
     });
 
+    console.log(`updatedScore Array: ${updatedScore}`);
     setScore(updatedScore.reduce((acc, curr) => acc + curr, 0));
 
     console.log("score: ", score);
   }, [questionArray]);
+
+  useEffect(() => {
+    console.log("Updated score: ", score);
+  }, [score]);
 
   useEffect(() => {
     if (showCorrectAnswer) {
