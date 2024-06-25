@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 
 const ButtonWithSound = ({
   isSelected,
@@ -6,6 +6,7 @@ const ButtonWithSound = ({
   handleClick,
   children,
   className,
+  isMuted,
   ...props
 }) => {
   const hoverSound = useRef(new Audio("/hover_sound.wav"));
@@ -20,6 +21,11 @@ const ButtonWithSound = ({
     selectSound.current.volume = 0.25;
     selectSound.current.play();
   };
+
+  useEffect(() => {
+    hoverSound.current.muted = isMuted;
+    selectSound.current.muted = isMuted;
+  }, [isMuted]);
 
   return (
     <>

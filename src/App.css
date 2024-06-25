@@ -15,6 +15,7 @@ main {
   margin-left: auto;
   margin-right: auto;
   padding: 1rem;
+  position: relative;
 }
 
 .position-up {
@@ -87,6 +88,18 @@ hr {
 }
 
 button:focus {
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.button-mute {
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+.button-mute:active {
+  box-shadow: none;
   outline: none;
   -webkit-tap-highlight-color: transparent;
 }

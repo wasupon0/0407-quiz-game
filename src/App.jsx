@@ -4,6 +4,8 @@ import { useEffect, useRef, useState } from "react";
 import "./App.css";
 import sampleArray from "./assets/sampleArray";
 import MultiChoice from "./components/MultiChoice";
+import unmuteImage from "/mute-off.svg";
+import muteImage from "/mute-on.svg";
 
 function App() {
   const [isNewGame, setIsNewGame] = useState(true);
@@ -12,9 +14,19 @@ function App() {
   const [totalScore, setTotalScore] = useState(0);
   const [isEndGame, setIsEndGame] = useState(false);
   const [isReady, setIsReady] = useState(false);
+  const [isMuted, setIsMuted] = useState(false);
 
   const url =
-    "https://opentdb.com/api.php?amount=2&category=9&difficulty=easy&type=multiple";
+    "https://opentdb.com/api.php?amount=5&category=9&difficulty=easy&type=multiple";
+
+  const toggleMute = () => {
+    setIsMuted((prevIsMuted) => !prevIsMuted);
+  };
+
+  useEffect(() => {
+    newGameSound.current.muted = isMuted;
+    selectSound.current.muted = isMuted;
+  }, [isMuted]);
 
   const newGameSound = useRef(new Audio("/new_game_sound.wav"));
   const selectSound = useRef(new Audio("/select_sound.wav"));
@@ -206,6 +218,19 @@ function App() {
 
   return isNewGame ? (
     <main className="new-game">
+      <button
+        onClick={toggleMute}
+        style={{
+          background: `url(${
+            isMuted ? muteImage : unmuteImage
+          }) no-repeat center/cover`,
+          width: "50px",
+          height: "50px",
+          border: "none",
+          outline: "none",
+        }}
+        className="button-mute"
+      ></button>
       <h1>Quiz game</h1>
       <p>
         This is a quiz game with 4 multiple choices. Choose one correct answer.
@@ -228,10 +253,24 @@ function App() {
     </main>
   ) : (
     <main className="start-game">
+      <button
+        onClick={toggleMute}
+        style={{
+          background: `url(${
+            isMuted ? muteImage : unmuteImage
+          }) no-repeat center/cover`,
+          width: "50px",
+          height: "50px",
+          border: "none",
+          outline: "none",
+        }}
+        className="button-mute"
+      ></button>
       <MultiChoice
         questionArray={questionArray}
         handleChoiceClick={handleChoiceClick}
         resetAnswer={resetAnswer}
+        isMuted={isMuted}
       />
       <button className="button-calculate" onClick={endGame}>
         Calculate Score

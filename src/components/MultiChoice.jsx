@@ -2,7 +2,12 @@ import { nanoid } from "nanoid";
 import React from "react";
 import ButtonWithSound from "./ButtonWithSound";
 
-const MultiChoice = ({ questionArray, handleChoiceClick, resetAnswer }) => {
+const MultiChoice = ({
+  questionArray,
+  handleChoiceClick,
+  resetAnswer,
+  isMuted,
+}) => {
   return (
     <div className="position-up">
       {questionArray.map((obj) => (
@@ -30,6 +35,7 @@ const MultiChoice = ({ questionArray, handleChoiceClick, resetAnswer }) => {
               handleClick={() => handleChoiceClick(obj.id, choice.text)}
               isDisable={choice.isDisable}
               isSelected={choice.isSelected}
+              isMuted={isMuted}
             >
               {choice.text}
             </ButtonWithSound>
